@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Licznik kliknięć</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #181818;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    button {
+      padding: 18px 36px;
+      font-size: 22px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    #licznik {
+      font-size: 48px;
+      font-weight: bold;
+    }
+
+    #opis {
+      color: #bbb;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <button id="guzik">Kliknij mnie!</button>
+
+    <div id="wynik" hidden>
+      <div id="licznik">0</div>
+      <div id="opis">osób kliknęło guzik</div>
+    </div>
+  </div>
+
+  <script>
+    const guzik = document.getElementById("guzik");
+    const wynik = document.getElementById("wynik");
+    const licznik = document.getElementById("licznik");
+
+    // Pobierz liczbę kliknięć
+    let liczbaKlikniec = Number(
+      localStorage.getItem("liczbaKlikniec") || 0
+    );
+
+    // Sprawdź, czy guzik był już kliknięty
+    if (localStorage.getItem("guzik") === "aktywny") {
+      pokazWynik();
+    }
+
+    function pokazWynik() {
+      guzik.hidden = true;
+      wynik.hidden = false;
+      licznik.textContent = liczbaKlikniec;
+    }
+
+    guzik.addEventListener("click", function() {
+      // Zapisz stan na stałe w tej przeglądarce
+      localStorage.setItem("guzik", "aktywny");
+
+      // Zwiększ licznik
+      liczbaKlikniec++;
+      localStorage.setItem(
+        "liczbaKlikniec",
+        liczbaKlikniec
+      );
+
+      // Ukryj guzik
+      pokazWynik();
+    });
+  </script>
+
+</body>
+</html>
